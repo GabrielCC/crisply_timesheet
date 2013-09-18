@@ -28,8 +28,7 @@ module CrisplyTimesheet
       # This will send the associated information to crisply
       def save_to_crisply
         self.reload
-        Rails.logger.info self.to_json
-        Rails.logger.info 'fuck'
+        CrisplyEntry.create_from_timeentry(self)
         return true
       end
     end    

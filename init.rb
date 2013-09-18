@@ -17,6 +17,4 @@ Redmine::Plugin.register :crisply_timesheet do
   version '0.0.1'
   author_url 'http://gabrielcroitoru.ro'
 
-  # require 'crisply_timesheet/hooks/controller_timelog_edit_before_save_hook.rb'
-  require 'crisply_timesheet/hooks/model_timeentry_edit_before_save_hook.rb'
 end
