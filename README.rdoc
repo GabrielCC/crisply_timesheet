@@ -1,7 +1,7 @@
-crisply_timesheet
+= Crisply Timesheet
 =====================
 
-timesheet integration plugin for redmine with crisply
+Time entry integration plugin for Redmine (http://redmine.org) with Crisply (http://crisply.com).
 
 == Installation and Setup
 
