@@ -1,20 +1,28 @@
 
 class CrisplyEntry
   include HTTParty
-  base_uri 'https://ltraven.crisply.com/crisply_sources/sources/data?token=DHIgdFg2rQ64AiJBaBgK0w'
   def self.create_from_timeentry(timeentry)
+    uri = self.getUriFromSettings
+    if !uri
+      self.my_logger.info 'no webhook defined for crisply'
+    else
+      options = self.format_entry(timeentry)
+      self.my_logger.info options.to_json
+      @response = self.post(uri,:body => options.to_json,
+                     :headers => { 'Content-Type' => 'application/json' })
+      self.my_logger.info timeentry.to_json
+      self.my_logger.info @response
+      self.my_logger.info @response.code
+    end
+  end
 
-    options = self.format_entry(timeentry)
-    self.my_logger.info options.to_json
-    @response = self.post('',:body => options.to_json,
-                   :headers => { 'Content-Type' => 'application/json' })
-    self.my_logger.info @response
-    self.my_logger.info @response.code
+  def self.getUriFromSettings
+    Setting.plugin_crisply_timesheet[:crisply_webkook]
   end
 
   def self.format_entry(timeentry) 
     options = {      
-      "timestamp" => "now", 
+      "timestamp" => timeentry.spent_on, 
       "duration" => timeentry.hours,    
       "description" => timeentry.comments, 
       "activity_type" => 'task' ,          
@@ -43,6 +51,7 @@ class CrisplyEntry
     project
   end
   def self.my_logger
-    @@my_logger ||= Logger.new("#{Rails.root}/plugins/crisply_timesheet/log/testing.log")
+    # @@my_logger ||= Logger.new("#{Rails.root}/plugins/crisply_timesheet/log/testing.log")
+    Rails.logger
   end
 end

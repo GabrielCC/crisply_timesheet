@@ -13,8 +13,7 @@ end
 Redmine::Plugin.register :crisply_timesheet do
   name 'Crisply Timesheet plugin'
   author 'Gabriel Croitoru'
-  description 'This is a plugin for Redmine'
+  description 'Crisply Timesheet plugin'
   version '0.0.1'
-  author_url 'http://gabrielcroitoru.ro'
-
+  settings :default => {'empty' => true}, :partial => 'settings/crisply_settings'
 end
